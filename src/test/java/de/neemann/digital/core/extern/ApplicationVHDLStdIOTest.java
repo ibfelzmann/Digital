@@ -18,7 +18,7 @@ public class ApplicationVHDLStdIOTest extends TestCase {
     private class TestApp extends ApplicationVHDLStdIO {
 
         @Override
-        public ProcessInterface start(String label, String code, PortDefinition inputs, PortDefinition outputs) throws IOException {
+        public ProcessInterface start(String label, String code, PortDefinition inputs, PortDefinition outputs, String appOptions) throws IOException {
             return null;
         }
 
@@ -28,7 +28,7 @@ public class ApplicationVHDLStdIOTest extends TestCase {
         }
 
         @Override
-        public String checkCode(String label, String code, PortDefinition inputs, PortDefinition outputs) throws IOException {
+        public String checkCode(String label, String code, PortDefinition inputs, PortDefinition outputs, String appOptions) throws IOException {
             return null;
         }
     }

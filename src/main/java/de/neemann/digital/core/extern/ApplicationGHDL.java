@@ -14,6 +14,8 @@ import de.neemann.digital.lang.Lang;
 import java.io.File;
 import java.io.IOException;
 import java.util.LinkedList;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * Abstraction of the ghdl Application.
@@ -22,15 +24,40 @@ import java.util.LinkedList;
 public class ApplicationGHDL extends ApplicationVHDLStdIO {
 
     @Override
-    public ProcessInterface start(String label, String code, PortDefinition inputs, PortDefinition outputs) throws IOException {
+    public ProcessInterface start(String label, String code, PortDefinition inputs, PortDefinition outputs, String appOptions) throws IOException {
         File file = null;
         try {
             String ghdl = getGhdlPath().getPath();
 
             file = createVHDLFile(label, code, inputs, outputs);
-            ProcessStarter.start(file.getParentFile(), ghdl, "-a", "--std=08", "--ieee=synopsys", file.getName());
-            ProcessStarter.start(file.getParentFile(), ghdl, "-e", "--std=08", "--ieee=synopsys", "stdIOInterface");
-            ProcessBuilder pb = new ProcessBuilder(ghdl, "-r", "--std=08", "--ieee=synopsys", "stdIOInterface", "--unbuffered").redirectErrorStream(true).directory(file.getParentFile());
+
+            ArrayList<String> cmd = new ArrayList<>();
+            ArrayList<String> optionsList = new ArrayList<>();
+            for (String o: Arrays.asList(appOptions.split("(?<!\\\\)\\s+"))) {
+              optionsList.add(o.replaceAll("\\\\(\\s+)", "$1"));
+            }
+
+            cmd.add(ghdl);
+            cmd.add("-a");
+            cmd.addAll(optionsList);
+            cmd.add(file.getName());
+            ProcessStarter.start(file.getParentFile(), cmd.toArray(new String[cmd.size()]));
+            cmd.clear();
+
+            cmd.add(ghdl);
+            cmd.add("-e");
+            cmd.addAll(optionsList);
+            cmd.add("stdIOInterface");
+            ProcessStarter.start(file.getParentFile(), cmd.toArray(new String[cmd.size()]));
+            cmd.clear();
+
+            cmd.add(ghdl);
+            cmd.add("-r");
+            cmd.addAll(optionsList);
+            cmd.add("stdIOInterface");
+            cmd.add("--unbuffered");
+            ProcessBuilder pb = new ProcessBuilder(cmd).redirectErrorStream(true).directory(file.getParentFile());
+
             return new GHDLProcessInterface(pb.start(), file.getParentFile());
         } catch (IOException e) {
             if (file != null)
@@ -57,14 +84,30 @@ public class ApplicationGHDL extends ApplicationVHDLStdIO {
     }
 
     @Override
-    public String checkCode(String label, String code, PortDefinition inputs, PortDefinition outputs) throws IOException {
+    public String checkCode(String label, String code, PortDefinition inputs, PortDefinition outputs, String appOptions) throws IOException {
         File file = null;
         try {
             String ghdl = getGhdlPath().getPath();
 
             file = createVHDLFile(label, code, inputs, outputs);
-            String m1 = ProcessStarter.start(file.getParentFile(), ghdl, "-a", "--ieee=synopsys", file.getName());
-            String m2 = ProcessStarter.start(file.getParentFile(), ghdl, "-e", "--ieee=synopsys", "stdIOInterface");
+            ArrayList<String> cmd = new ArrayList<>();
+            ArrayList<String> optionsList = new ArrayList<>();
+            for (String o: Arrays.asList(appOptions.split("(?<!\\\\)\\s+"))) {
+              optionsList.add(o.replaceAll("\\\\(\\s+)", "$1"));
+            }
+
+            cmd.add(ghdl);
+            cmd.add("-a");
+            cmd.addAll(optionsList);
+            cmd.add(file.getName());
+            String m1 = ProcessStarter.start(file.getParentFile(), cmd.toArray(new String[cmd.size()]));
+            cmd.clear();
+
+            cmd.add(ghdl);
+            cmd.add("-e");
+            cmd.addAll(optionsList);
+            cmd.add("stdIOInterface");
+            String m2 = ProcessStarter.start(file.getParentFile(), cmd.toArray(new String[cmd.size()]));
             return ProcessStarter.joinStrings(m1, m2);
         } catch (IOException e) {
             if (ghdlNotFound(e))

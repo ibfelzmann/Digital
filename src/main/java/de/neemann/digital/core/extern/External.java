@@ -39,6 +39,7 @@ public class External extends Node implements Element {
             .addAttribute(Keys.EXTERNAL_INPUTS)
             .addAttribute(Keys.EXTERNAL_OUTPUTS)
             .addAttribute(Keys.EXTERNAL_CODE)
+            .addAttribute(Keys.APPLICATION_OPTIONS)
             .addAttribute(Keys.APPLICATION_TYPE);
 
     private final Application.Type type;
@@ -47,6 +48,7 @@ public class External extends Node implements Element {
     private final ObservableValues outputs;
     private final String code;
     private final String label;
+    private final String appOptions;
     private ObservableValues inputs;
     private ProcessInterface processInterface;
 
@@ -63,6 +65,7 @@ public class External extends Node implements Element {
         label = attr.getLabel();
         type = attr.get(Keys.APPLICATION_TYPE);
         code = attr.get(Keys.EXTERNAL_CODE);
+        appOptions = attr.get(Keys.APPLICATION_OPTIONS);
     }
 
     @Override
@@ -103,7 +106,7 @@ public class External extends Node implements Element {
             if (app == null)
                 throw new NodeException(Lang.get("err_errorCreatingProcess"), this, -1, null);
 
-            processInterface = app.start(label, code, ins, outs);
+            processInterface = app.start(label, code, ins, outs, appOptions);
         } catch (IOException e) {
             throw new NodeException(Lang.get("err_errorCreatingProcess"), this, -1, null, e);
         }

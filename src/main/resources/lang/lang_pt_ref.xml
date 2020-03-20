@@ -1169,6 +1169,8 @@
   <string name="key_applicationType_Generic">Generic</string>
   <string name="key_applicationType_GHDL">GHDL</string>
   <string name="key_applicationType_IVERILOG">IVerilog</string>
+  <string name="key_appOptions">Application Options</string>
+  <string name="key_appOptions_tt">Defines options to be passed to the application (currently GHDL only).</string>
   <string name="key_externalInputs">Inputs</string>
   <string name="key_externalInputs_tt">The inputs of the external process.
         It is a comma-separated list of signal names. For each signal name, with a colon separated, a number of bits

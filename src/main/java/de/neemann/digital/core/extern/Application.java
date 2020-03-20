@@ -61,10 +61,11 @@ public interface Application {
      * @param code    the code itself
      * @param inputs  the inputs expected by Digital
      * @param outputs the outputs expected by Digital
+     * @param appOptions the options to be passed to Application
      * @return the ProcessInterface
      * @throws IOException IOException
      */
-    ProcessInterface start(String label, String code, PortDefinition inputs, PortDefinition outputs) throws IOException;
+    ProcessInterface start(String label, String code, PortDefinition inputs, PortDefinition outputs, String appOptions) throws IOException;
 
     /**
      * Used to make the component consistent.
@@ -93,10 +94,11 @@ public interface Application {
      * @param code    the code itself
      * @param inputs  the inputs expected by Digital
      * @param outputs the outputs expected by Digital
+     * @param appOptions the options to be passed to Application
      * @return the applications message, maybe null
      * @throws IOException IOException
      */
-    default String checkCode(String label, String code, PortDefinition inputs, PortDefinition outputs) throws IOException {
+    default String checkCode(String label, String code, PortDefinition inputs, PortDefinition outputs, String appOptions) throws IOException {
         return null;
     }
 }

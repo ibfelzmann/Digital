@@ -15,7 +15,7 @@ public class ApplicationVerilogStdIOTest extends TestCase {
     private class TestApp extends ApplicationVerilogStdIO {
 
         @Override
-        public ProcessInterface start(String label, String code, PortDefinition inputs, PortDefinition outputs) {
+        public ProcessInterface start(String label, String code, PortDefinition inputs, PortDefinition outputs, String appOptions) {
             return null;
         }
 
@@ -25,7 +25,7 @@ public class ApplicationVerilogStdIOTest extends TestCase {
         }
 
         @Override
-        public String checkCode(String label, String code, PortDefinition inputs, PortDefinition outputs) {
+        public String checkCode(String label, String code, PortDefinition inputs, PortDefinition outputs, String appOptions) {
             return null;
         }
     }

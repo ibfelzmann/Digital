@@ -697,6 +697,11 @@ public final class Keys {
     public static final Key<String> EXTERNAL_OUTPUTS
             = new Key<>("externalOutputs", "out");
     /**
+     * The options passed to Application
+     */
+    public static final Key<String> APPLICATION_OPTIONS
+            = new Key<>("appOptions", "--std=08 --ieee=synopsys");
+    /**
      * The code to be executed by the external process
      */
     public static final Key.LongString EXTERNAL_CODE

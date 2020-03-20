@@ -37,7 +37,7 @@ public class ApplicationIVerilog extends ApplicationVerilogStdIO {
     }
 
     @Override
-    public ProcessInterface start(String label, String code, PortDefinition inputs, PortDefinition outputs) throws IOException {
+    public ProcessInterface start(String label, String code, PortDefinition inputs, PortDefinition outputs, String appOptions) throws IOException {
         File file = null;
 
         if (!hasIverilog) {
@@ -77,7 +77,7 @@ public class ApplicationIVerilog extends ApplicationVerilogStdIO {
     }
 
     @Override
-    public String checkCode(String label, String code, PortDefinition inputs, PortDefinition outputs) throws IOException {
+    public String checkCode(String label, String code, PortDefinition inputs, PortDefinition outputs, String appOptions) throws IOException {
         File file = null;
 
         if (!hasIverilog) {
